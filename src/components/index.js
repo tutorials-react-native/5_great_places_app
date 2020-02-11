@@ -1,3 +1,5 @@
 import HeaderButton from "./HeaderButton";
+import PlaceItem from "./PlaceItem";
+import ImagePicker from "./ImagePicker";
 
-export { HeaderButton };
+export { HeaderButton, PlaceItem, ImagePicker };

@@ -4,6 +4,16 @@ import { Provider } from "react-redux";
 
 import { MainNavigator } from "navigations";
 import store from "store/configureStore";
+import { init } from "helpers/db";
+
+init()
+  .then(() => {
+    console.log("Initialized database.");
+  })
+  .catch(error => {
+    console.log("Initializing db failed.");
+    console.log(error);
+  });
 
 export default function App() {
   return (

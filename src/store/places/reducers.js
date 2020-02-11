@@ -1,6 +1,7 @@
 import produce from "immer";
 
 import { actions } from "store";
+import Place from "models/place";
 
 const INITIAL_STATE = {
   places: []
@@ -9,8 +10,13 @@ const INITIAL_STATE = {
 const places = produce((draft, action) => {
   switch (action.type) {
     case actions.ADD_PLACE:
-      const { title } = action;
-      draft.places.push(title);
+      const { titleValue, selectedImage } = action;
+      const newPlace = new Place(
+        new Date().toISOString(),
+        titleValue,
+        selectedImage
+      );
+      draft.places.push(newPlace);
       return;
   }
   return;
