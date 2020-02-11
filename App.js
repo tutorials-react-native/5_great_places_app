@@ -1,10 +1,16 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { Provider } from "react-redux";
 
 import { MainNavigator } from "navigations";
+import store from "store/configureStore";
 
 export default function App() {
-  return <MainNavigator />;
+  return (
+    <Provider store={store}>
+      <MainNavigator />
+    </Provider>
+  );
 }
 
 const styles = StyleSheet.create({
