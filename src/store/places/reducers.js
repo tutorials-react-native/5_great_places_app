@@ -10,13 +10,35 @@ const INITIAL_STATE = {
 const places = produce((draft, action) => {
   switch (action.type) {
     case actions.ADD_PLACE:
-      const { titleValue, selectedImage } = action;
-      const newPlace = new Place(
-        new Date().toISOString(),
+      const {
         titleValue,
-        selectedImage
+        selectedImage,
+        id,
+        address,
+        selectedLocation
+      } = action;
+      const newPlace = new Place(
+        id.toString(),
+        titleValue,
+        selectedImage,
+        address,
+        selectedLocation.lat,
+        selectedLocation.lng
       );
       draft.places.push(newPlace);
+      return;
+    case actions.SET_PLACES:
+      draft.places = action.places.map(
+        pl =>
+          new Place(
+            pl.id.toString(),
+            pl.title,
+            pl.imageUri,
+            pl.address,
+            pl.lat,
+            pl.lng
+          )
+      );
       return;
   }
   return;

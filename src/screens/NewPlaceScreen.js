@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import {
   View,
@@ -11,11 +11,12 @@ import {
 
 import Colors from "colors";
 import { actions } from "store";
-import { ImagePicker } from "components";
+import { ImagePicker, LocationPicker } from "components";
 
 const NewPlaceScreen = ({ navigation }) => {
   const [titleValue, setTitleValue] = useState("");
   const [selectedImage, setSelectedImage] = useState();
+  const [selectedLocation, setSelectedLocation] = useState();
   const dispatch = useDispatch();
 
   const changeTitleHandler = text => {
@@ -23,13 +24,17 @@ const NewPlaceScreen = ({ navigation }) => {
   };
 
   const savePlaceHandler = () => {
-    dispatch(actions.addPlace({ titleValue, selectedImage }));
+    dispatch(actions.addPlace({ titleValue, selectedImage, selectedLocation }));
     navigation.goBack();
   };
 
   const imageTakenHandler = imageUri => {
     setSelectedImage(imageUri);
   };
+
+  const selectLocationHandler = useCallback(location => {
+    setSelectedLocation(location);
+  }, []);
   return (
     <ScrollView>
       <View style={styles.form}>
@@ -40,6 +45,10 @@ const NewPlaceScreen = ({ navigation }) => {
           onChangeText={changeTitleHandler}
         />
         <ImagePicker onImageTaken={imageTakenHandler} />
+        <LocationPicker
+          onSelectLocation={selectLocationHandler}
+          navigation={navigation}
+        />
         <Button
           title="Save Place"
           color={Colors.primary}
@@ -64,7 +73,8 @@ const styles = StyleSheet.create({
   },
   input: {
     borderBottomColor: "#ccc",
-    borderBottomWidth: 1
+    borderBottomWidth: 1,
+    marginBottom: 10
   }
 });
 
